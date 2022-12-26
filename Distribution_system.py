@@ -11,11 +11,14 @@ yag = yagmail.SMTP("sharmaagastya40@gmail.com", "sjsdfnspklfgkmec")
 
 in1 = 24
 in2 = 23
-en = 25
+in3 = 14
+in4 = 15
+ena = 25
+enb = 18
 temp1=1
 # create a tkinter window
 root = Tk()
-# for IR sensor
+# for IR ssor
 buzzer = 18
 sensor = 16
 GPIO.setup(sensor,GPIO.IN)
@@ -24,11 +27,20 @@ GPIO.setup(buzzer,GPIO.OUT)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(in1,GPIO.OUT)
 GPIO.setup(in2,GPIO.OUT)
-GPIO.setup(en,GPIO.OUT)
+GPIO.setup(ena,GPIO.OUT)
+
+GPIO.setup(in3,GPIO.OUT)
+GPIO.setup(in4,GPIO.OUT)
+GPIO.setup(enb,GPIO.OUT)
+
 GPIO.output(in1,GPIO.LOW)
 GPIO.output(in2,GPIO.LOW)
-p=GPIO.PWM(en,1000)
+GPIO.output(in3,GPIO.LOW)
+GPIO.output(in4,GPIO.LOW)
+p=GPIO.PWM(ena,1000)
+q=GPIO.PWM(enb,1000)
 p.start(25)
+q.start(25)
 
 
 
@@ -116,9 +128,13 @@ try:
         p.ChangeDutyCycle(75) #speed of the motors
         GPIO.output(in1,GPIO.HIGH)
         GPIO.output(in2,GPIO.LOW)
+        GPIO.output(in3,GPIO.HIGH)
+        GPIO.output(in4,GPIO.LOW)
         sleep(3)
-        GPIO.output(in1,GPIO.HIGH)
+        GPIO.output(in1,GPIO.LOW)
         GPIO.output(in2,GPIO.LOW)
+        GPIO.output(in3,GPIO.LOW)
+        GPIO.output(in4,GPIO.LOW)
         requests.post('https://maker.ifttt.com/trigger/Medicine_dispensed/json/with/key/jhPlpb6TxLwNt2rqezn5b-Qdsj3aQmy28gRzLRrHvLy')
         yag.send(text_var2.get(), "Medicine is Dispensed", "Your patient's medicine has been dispensed") 
     # for the window to display
